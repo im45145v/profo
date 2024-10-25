@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Your Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Edit Your Portfolio</h1>
+    </header>
+    <main>
+        <form action="{{ url_for('portfolio_editor') }}" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ user_data.name }}" required>
+            
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio" required>{{ user_data.bio }}</textarea>
+            
+            <label for="projects">Projects:</label>
+            <div id="projects">
+                {% for project in user_data.projects %}
+                    <div class="project">
+                        <input type="text" name="projects" value="{{ project.title }}" required>
+                        <textarea name="projects">{{ project.description }}</textarea>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <button type="submit">Save</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Portfolio Generator. All rights reserved.</p>
+    </footer>
+</body>
+</html>
