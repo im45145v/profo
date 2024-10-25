@@ -1,24 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="""en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="""UTF-8">
+    <meta name="viewport" content="""width=device-width, initial-scale=""1.0">
     <title>Choose a Template</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .template-card {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .template-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .template-card h3 {
+            margin: 0.5rem 0;
+        }
+        .template-card p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .template-card a {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .template-card a:hover {
+            background-color: #555;
+        }
+        .search-bar {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .search-bar input {
+            padding: 0.5rem;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .pagination a {
+            margin: 0 0.5rem;
+            text-decoration: none;
+            color: #333;
+        }
+        .pagination a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Choose a Template</h1>
     </header>
     <main>
-        <ul>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search templates...">
+        </div>
+        <div class="template-grid">
             {% for theme in themes %}
-                <li>{{ theme.name }}</li>
+                <div class="template-card">
+                    <img src="{{ url_for('static', filename='images/template' + theme.id|string + '.jpg') }}" alt="{{ theme.name }}">
+                    <h3>{{ theme.name }}</h3>
+                    <p>Brief description of {{ theme.name }}</p>
+                    <a href="{{ url_for('preview_template', theme_id=theme.id) }}">Preview</a>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
+        <div class="pagination">
+            <a href="#">&laquo; Previous</a>
+            <a href="#">Next &raquo;</a>
+        </div>
+        <div style="text-align: center; margin-top: 1rem;">
+            <a href="{{ url_for('home') }}">Back to Home</a>
+        </div>
     </main>
     <footer>
         <p>&copy; 2024 Portfolio Generator. All rights reserved.</p>
     </footer>
+    <script>
+        document.getElementById('search').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll('.template-card').forEach(function(card) {
+                const templateName = card.querySelector('h3').textContent.toLowerCase();
+                if (templateName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

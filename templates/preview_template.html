@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Template</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Preview Template: {{ theme.name }}</h1>
+    </header>
+    <main>
+        <p>This is a preview of the selected template.</p>
+        <div>
+            <h2>{{ user_data.name }}</h2>
+            <p>{{ user_data.bio }}</p>
+            <h3>Projects</h3>
+            <ul>
+                {% for project in user_data.projects %}
+                    <li>
+                        <h4>{{ project.title }}</h4>
+                        <p>{{ project.description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Portfolio Generator. All rights reserved.</p>
+    </footer>
+</body>
+</html>

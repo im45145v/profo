@@ -22,13 +22,28 @@
             <div id="projects">
                 {% for project in user_data.projects %}
                     <div class="project">
-                        <input type="text" name="projects" value="{{ project.title }}" required>
-                        <textarea name="projects">{{ project.description }}</textarea>
+                        <input type="text" name="project_titles" value="{{ project.title }}" required>
+                        <textarea name="project_descriptions">{{ project.description }}</textarea>
                     </div>
                 {% endfor %}
             </div>
             
             <button type="submit">Save</button>
+        </form>
+        <form action="{{ url_for('publish') }}" method="POST">
+            <button type="submit">Export Portfolio Data</button>
+        </form>
+        <form action="{{ url_for('export_portfolio', theme_id=1) }}" method="GET">
+            <button type="submit">Export Portfolio as HTML</button>
+        </form>
+        <form action="{{ url_for('export_portfolio', theme_id=1) }}" method="GET">
+            <label for="theme_id">Choose Template:</label>
+            <select id="theme_id" name="theme_id">
+                {% for theme in themes %}
+                    <option value="{{ theme.id }}">{{ theme.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Export Portfolio with Selected Template</button>
         </form>
     </main>
     <footer>

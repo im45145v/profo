@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(form);
         const projects = [];
         projectsContainer.querySelectorAll('.project').forEach(function(project) {
-            const title = project.querySelector('input[name="projects"]').value;
-            const description = project.querySelector('textarea[name="projects"]').value;
+            const title = project.querySelector('input[name="project_titles"]').value;
+            const description = project.querySelector('textarea[name="project_descriptions"]').value;
             projects.push({ title, description });
         });
         formData.set('projects', JSON.stringify(projects));
